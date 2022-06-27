@@ -123,6 +123,19 @@ class DataBase():
         connection.close()
         return True
 
+    def get_location(self, user_id: int, location: str):
+        try:
+            connection = pymysql.connect(**self.config)
+        except Exception as e:
+            print(e)
+            return
+        with connection.cursor() as cursor:
+            query = f'SELECT city FROM search WHERE user_id = {user_id} AND location_id = {location}'
+            cursor.execute(query)
+            result = cursor.fetchone()[0]
+        connection.close()
+        return result
+
     def get_user_data(self, user_id: int, col: str):
         try:
             connection = pymysql.connect(**self.config)
@@ -132,10 +145,6 @@ class DataBase():
         with connection.cursor() as cursor:
             if col in self.user_columns:
                 cursor.execute(f'SELECT {col} FROM users WHERE user_id = {user_id}')
-                result = cursor.fetchone()[0]
-            elif col.startswith('search'):
-                query = f'SELECT city FROM search WHERE user_id = {user_id} AND location_id = {col[6:]}'
-                cursor.execute(query)
                 result = cursor.fetchone()[0]
             else:
                 result = None

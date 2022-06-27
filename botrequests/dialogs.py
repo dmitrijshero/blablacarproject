@@ -89,9 +89,9 @@ def apply_city(call: types.CallbackQuery):
         location_stage(call.message)
         return
     location_id = call.data[6:]
-    city = db.get_user_data(user_id, call.data)
+    city = db.get_location(user_id, location_id)
     db.set_user_data(user_id=user_id, col='location', data=location_id)
-    bot.edit_message_text(f"{text['looking_hotels']} {city[0]}", call.message.chat.id, call.message.message_id)
+    bot.edit_message_text(f"{text['looking_hotels']} {city}", call.message.chat.id, call.message.message_id)
     command = db.get_user_data(user_id=user_id, col='command')
     db.set_user_data(user_id=user_id, col='city', data=city)
     Stages.instances[command].go_to_next_stage(call.message)
