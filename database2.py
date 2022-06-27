@@ -1,6 +1,5 @@
 from datetime import datetime,timedelta
 import pymysql
-from collections import OrderedDict
 from mysql_dbconfig import read_db_config
 
 
