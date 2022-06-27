@@ -1,6 +1,5 @@
 from datetime import datetime,timedelta
 import pymysql
-from collections import OrderedDict
 from mysql_dbconfig import read_db_config
 
 
@@ -171,7 +170,7 @@ class DataBase():
         return not (result is None)
 
     def history_start_command(self, user_id: int) -> None:
-        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         query = 'INSERT INTO history (user_id, start) VALUES (%s, %s)'
         try:
             connection = pymysql.connect(**self.config)
@@ -184,7 +183,7 @@ class DataBase():
         connection.close()
 
     def save_user_history(self, user_data: dict, result: list) -> None:
-        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         try:
             connection = pymysql.connect(**self.config)
         except Exception as e:
